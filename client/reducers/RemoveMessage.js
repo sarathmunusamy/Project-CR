@@ -8,7 +8,7 @@ const RemoveMessage = (state = [], action) => {
             break;
 
         default:
-        return state;
+            return state;
             break;
     }
 }

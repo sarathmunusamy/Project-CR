@@ -2,6 +2,13 @@ import React from 'react';
 
 const Main = React.createClass({
 
+    sendMessage() {
+
+        var msg = this.refs.msg.value;
+
+this.props.addMessage('Sarath',msg)
+    },
+
     render() {
         console.log(this.props);
         return (
@@ -14,6 +21,9 @@ const Main = React.createClass({
                                     <b>{msg.User}: </b> {msg.Message}
                                 </div>
                             </div>
+
+                            <input type="text" ref="msg" className="message_typer" />
+                            <button className="send" onClick={this.sendMessage}> Send </button>
                         </div>
                     )
                 })}
