@@ -1,4 +1,6 @@
 import React from 'react';
+import MessageInstance from './MessageInstance';
+import DeletedMessage from './DeletedMessage';
 
 const Message_01 = React.createClass({
 
@@ -14,8 +16,9 @@ const Message_01 = React.createClass({
         if (event.keyCode == 13)
             this.sendMessage();
     },
-    onDoubleClickEvent(index, msgID,user) {
-        var removeIcon =$($('#'+user).find('#' + msgID)).find('.glyphicon-remove');
+    onDoubleClickEvent(index, msgID, user) {
+        var removeIcon = $($('#' + user).find('#' + msgID)).find('.glyphicon-remove');
+        var replayIcon = $($('#' + user).find('#' + msgID)).find('.fa-mail-reply');
         if (this.props.message[index].User == this.props.user) {
             if (removeIcon.css('display') == 'none')
                 removeIcon.css('display', 'block');
@@ -23,13 +26,14 @@ const Message_01 = React.createClass({
                 removeIcon.css('display', 'none');
         } else {
 
-            console.log('you cannot get remove icon');
+            if (replayIcon.css('display') == 'none')
+                replayIcon.css('display', 'block');
+            else
+                replayIcon.css('display', 'none');
         }
     },
 
-    removeMessage(index) {
-        this.props.onMessageRemove(index);
-    },
+
     render() {
         return (
             <fieldset id={this.props.user}>
@@ -40,8 +44,10 @@ const Message_01 = React.createClass({
                     return (
                         <div key={index}>
                             <div className="chatContainer">
-                                <div className="msgArea" id={msg.ID} onDoubleClick={() => this.onDoubleClickEvent(index, msg.ID,this.props.user)}>
-                                <b>{msg.User}: </b> {msg.Message} <span className="timeSpan">{msg.Time}</span> <span onClick={() => this.removeMessage(index)} style={{ display: 'none' }} className="glyphicon glyphicon-remove" />
+                                <div className="msgArea" id={msg.ID} onDoubleClick={() => this.onDoubleClickEvent(index, msg.ID, this.props.user)}>
+                                    {msg.IsRemoved ? <DeletedMessage msg={msg} /> :
+                                        <MessageInstance msg={msg} index={index} onRemove={this.props.onMessageRemove} />
+                                    }
                                 </div>
                             </div>
                         </div>

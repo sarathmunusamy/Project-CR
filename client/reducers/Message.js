@@ -21,7 +21,7 @@ const Message = (state = {}, action) => {
 
             var updatedState = state[action.index];
             updatedState.Message = 'it is deleted';
-            update.IsRemoved = true;
+            updatedState.IsRemoved = true;
 
             var newState = [...state.slice(0, action.index), updatedState,
             ...state.slice(action.index + 1)];
