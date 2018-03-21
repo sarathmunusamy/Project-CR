@@ -4,16 +4,24 @@ const Message = (state = {}, action) => {
         case 'addMessage':
 
             var tempData = {
-                User: 'alpha',
-                Message: 'firstMessage',
-                Time: '000',
-                ID: 'message_002'
+                User: action.user,
+                Message: action.message,
+                Time: new Date().toLocaleString(),
+                ID: state.length,
+                IsRemoved: false,
+                ReplyReference: null
             };
 
-            return { ...state.message, message: [...state.messgae, tempData] }
+            var newState = [...state.slice(0, state.length), tempData];
 
-            return state;
+            return newState;
             break;
+
+        case 'removeMessage':
+            var newState = [...state.slice(0, action.index - 1),
+            ...state.slice(action.index + 1)];  //...state[action.index].Message = 'This Message is deleted by' + state[action.index].User,
+
+            return newState;
 
         default:
             return state;

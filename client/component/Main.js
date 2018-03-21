@@ -1,34 +1,17 @@
 import React from 'react';
+import Message_01 from './Message_01';
 
 const Main = React.createClass({
 
-    sendMessage() {
-
-        var msg = this.refs.msg.value;
-
-this.props.addMessage('Sarath',msg)
-    },
 
     render() {
         console.log(this.props);
         return (
-            <div>
-                {this.props.message.map(msg => {
-                    return (
-                        <div key={msg.ID} className="container">
-                            <div className="chatContainer">
-                                <div className="msgArea">
-                                    <b>{msg.User}: </b> {msg.Message}
-                                </div>
-                            </div>
+            <div className="parentContainer">
 
-                            <input type="text" ref="msg" className="message_typer" />
-                            <button className="send" onClick={this.sendMessage}> Send </button>
-                        </div>
-                    )
-                })}
-
-
+                <Message_01 className="messageComponent" message={this.props.message} user="Bob" onMessageRemove={this.props.removeMessage} onMessageSend={this.props.addMessage} />
+                <Message_01 className="messageComponent" message={this.props.message} user="Kevin" onMessageRemove={this.props.removeMessage}  onMessageSend={this.props.addMessage} />
+                <Message_01 className="messageComponent" message={this.props.message} user="Stuart" onMessageRemove={this.props.removeMessage}  onMessageSend={this.props.addMessage} />
             </div>
         )
     }
