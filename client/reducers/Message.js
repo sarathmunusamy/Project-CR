@@ -18,8 +18,13 @@ const Message = (state = {}, action) => {
             break;
 
         case 'removeMessage':
-            var newState = [...state.slice(0, action.index - 1),
-            ...state.slice(action.index + 1)];  //...state[action.index].Message = 'This Message is deleted by' + state[action.index].User,
+
+            var updatedState = state[action.index];
+            updatedState.Message = 'it is deleted';
+            update.IsRemoved = true;
+
+            var newState = [...state.slice(0, action.index), updatedState,
+            ...state.slice(action.index + 1)];
 
             return newState;
 
