@@ -1,15 +1,28 @@
 import React from 'react';
 import MessageInstance from './MessageInstance';
 import DeletedMessage from './DeletedMessage';
+import ReplyMessage from './replyMessage';
 
 const Message_01 = React.createClass({
 
+    componentWillMount() {
+        this.state = {
+            replyIndex: null
+        }
+    },
 
+    updateReplyIndex(index) {
+
+        this.setState({
+            replyIndex: index
+        })
+    },
     sendMessage() {
 
         var msg = this.refs.msg.value;
 
-        this.props.onMessageSend(this.props.user, msg);
+
+        this.props.onMessageSend(this.props.user, msg, this.state.replyIndex);
         this.refs.msg.value = '';
     },
     keypress(event) {
@@ -42,13 +55,20 @@ const Message_01 = React.createClass({
                 {this.props.message.map((msg, index) => {
                     const isDeletedMsg = msg.IsRemoved;
                     return (
-                        <div key={index}>
-                            <div className="chatContainer">
-                                <div className="msgArea" id={msg.ID} onDoubleClick={() => this.onDoubleClickEvent(index, msg.ID, this.props.user)}>
-                                    {msg.IsRemoved ? <DeletedMessage msg={msg} /> :
-                                        <MessageInstance msg={msg} index={index} onRemove={this.props.onMessageRemove} />
-                                    }
-                                </div>
+                        <div className="chatContainer">
+                            <div className="msgArea" id={msg.ID} onDoubleClick={() => this.onDoubleClickEvent(index, msg.ID, this.props.user)}>
+                                {msg.IsRemoved ? <DeletedMessage msg={msg} /> : (
+                                    msg.ReplyReference != null && msg.ReplyReference > 0 ?
+
+                                        (
+                                            <div className="messageWithReply">
+                                                <ReplyMessage msg={this.props.message} targetIndex={msg.ReplyReference} />
+                                                <MessageInstance msg={msg} index={index} updateIndex={this.updateReplyIndex} user={this.props.user} onRemove={this.props.onMessageRemove} />
+                                            </div>
+                                        ) :
+                                        <MessageInstance msg={msg} index={index} updateIndex={this.updateReplyIndex} user={this.props.user} onRemove={this.props.onMessageRemove} />
+                                )
+                                }
                             </div>
                         </div>
                     )

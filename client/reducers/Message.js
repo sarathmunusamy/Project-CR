@@ -9,7 +9,7 @@ const Message = (state = {}, action) => {
                 Time: new Date().toLocaleString(),
                 ID: state.length,
                 IsRemoved: false,
-                ReplyReference: null
+                ReplyReference: action.replyIndex
             };
 
             var newState = [...state.slice(0, state.length), tempData];

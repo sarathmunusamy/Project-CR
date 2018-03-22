@@ -1,8 +1,9 @@
-export const addMessage = (user, message) => {
+export const addMessage = (user, message,replyIndex) => {
     return {
         type: 'addMessage',
         user,
-        message
+        message,
+        replyIndex
 
     }
 }
