@@ -49,8 +49,8 @@ const Message_01 = React.createClass({
 
     render() {
         return (
-            <fieldset id={this.props.user}>
-                <legend>{this.props.user}</legend>
+            <fieldset id={this.props.user} >
+                <legend>{this.props.user}<img src="./images/bob.jpg" /></legend>
 
                 {this.props.message.map((msg, index) => {
                     const isDeletedMsg = msg.IsRemoved;

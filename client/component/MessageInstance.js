@@ -15,6 +15,12 @@ const MessageInstance = React.createClass({
         }));
 
         this.props.updateIndex(id);
+
+        $($('#' + this.props.user).find('#' + id).css({
+            border: 'none'
+        }));
+        $($('#' + this.props.user).find('.fa-mail-reply')).hide();
+
     },
     render() {
         var msg = this.props.msg;
