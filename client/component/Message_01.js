@@ -3,6 +3,7 @@ import MessageInstance from './MessageInstance';
 import DeletedMessage from './DeletedMessage';
 import ReplyMessage from './replyMessage';
 
+
 const Message_01 = React.createClass({
 
     componentWillMount() {
@@ -10,7 +11,6 @@ const Message_01 = React.createClass({
             replyIndex: null
         }
     },
-
     updateReplyIndex(index) {
 
         this.setState({
@@ -20,8 +20,6 @@ const Message_01 = React.createClass({
     sendMessage() {
 
         var msg = this.refs.msg.value;
-
-
         this.props.onMessageSend(this.props.user, msg, this.state.replyIndex);
         this.refs.msg.value = '';
     },
@@ -48,9 +46,10 @@ const Message_01 = React.createClass({
 
 
     render() {
+        // var imgSrc = require('../../images/bob.jpg');
         return (
             <fieldset id={this.props.user} >
-                <legend>{this.props.user}<img src="./images/bob.jpg" /></legend>
+                <legend>{this.props.user}</legend>
 
                 {this.props.message.map((msg, index) => {
                     const isDeletedMsg = msg.IsRemoved;
